@@ -100,7 +100,16 @@ const EnvSchema = z.object({
   HMAC_SECRET: z.string().min(32),
   /** How long a human has to act on a paused call before its resumeToken stops verifying. Ops policy knob, not a crypto parameter — env var, not a code constant, matching the other Phase 4 budget policy knobs above. */
   RESUME_TOKEN_TTL_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
+  HMAC_SECRET: z.string().min(32),
+  /** How long a human has to act on a paused call before its resumeToken stops verifying. Ops policy knob, not a crypto parameter — env var, not a code constant, matching the other Phase 4 budget policy knobs above. */
+  RESUME_TOKEN_TTL_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
+
+  /** Optional Polar.sh Pro license key validated once at process boot. */
+  SENTINEL_LICENSE_KEY: z.string().min(1).optional(),
+  /** Polar.sh organization UUID associated with SENTINEL_LICENSE_KEY. */
+  POLAR_ORGANIZATION_ID: z.string().uuid().optional(),
 });
+
 
 // Fail fast and loud: an invalid or missing config at boot is a deploy-time
 // bug, not something the gateway should limp along with in production.

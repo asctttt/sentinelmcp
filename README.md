@@ -15,6 +15,13 @@
   <a href="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml"><img src="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
   <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node version">
+  <a href="https://buy.polar.sh/YOUR_CHECKOUT_LINK"><img src="https://img.shields.io/badge/SentinelMCP_Pro-Get_License_Key-8A2BE2" alt="Get SentinelMCP Pro"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml"><img src="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node version">
 </p>
 
 
@@ -149,6 +156,24 @@ The full engineering log — what's verified, every bug found during
 development and how it was fixed, and every known limitation stated
 plainly rather than glossed over — lives in
 [`docs/ENGINEERING.md`](docs/ENGINEERING.md).
+
+---
+
+## SentinelMCP Pro & Enterprise Support
+
+SentinelMCP's core gateway is free and MIT-licensed. For teams running multiple replicas in production or requiring compliance audit trails, **SentinelMCP Pro** unlocks enterprise capabilities via a single `SENTINEL_LICENSE_KEY` environment variable:
+
+| Feature | Community (MIT) | SentinelMCP Pro ($199/mo) |
+|---|---|---|
+| Origin Guard, Policy Gate & ID-JAG Verification | Included | Included |
+| 168-Bucket Sliding Window & Spike Detection | Single Instance | Multi-Replica / Cluster Ready |
+| Structured SIEM / Datadog Audit Log Export | — | Included |
+| Slack / PagerDuty Budget Breach Webhooks | — | Included |
+| Priority Security Patches & Architecture Support | Community Issues | Direct Engineering Support |
+
+👉 **[Purchase a SentinelMCP Pro License Key via Polar.sh](https://buy.polar.sh/YOUR_CHECKOUT_LINK)**
+
+---
 
 ## License
 

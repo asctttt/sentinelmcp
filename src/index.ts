@@ -14,11 +14,13 @@
 
 import { buildApp } from './app.js';
 import { env } from './config/env.js';
+import { verifyLicenseAtBoot } from './license.js';
 
 const app = buildApp();
 
 async function start(): Promise<void> {
   try {
+    await verifyLicenseAtBoot(app.log);
     await app.listen({ host: env.HOST, port: env.PORT });
   } catch (err) {
     app.log.error({ err }, 'failed to start SentinelMCP gateway');
