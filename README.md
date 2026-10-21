@@ -1,12 +1,21 @@
-# SentinelMCP
+<div align="center">
+  <h1>🛡️ SentinelMCP</h1>
+  <p><b>Stateless enterprise policy firewall & token-cost proxy for MCP.</b></p>
+  <p>Drop it in front of any Model Context Protocol server. Every tool call gets checked for identity, policy, and budget before it reaches your infrastructure — no database, no sticky sessions, nothing new to operate at 3am.</p>
 
-**Stateless enterprise policy firewall & token-cost proxy for MCP.**
+  <!-- 👇 THE 1-COMMAND DEMO GIF GOES HERE -->
+  <img src="assets/sentinel-demo.gif" alt="SentinelMCP 1-Command Terminal Demo" width="850" style="border-radius: 8px; margin: 20px 0;" />
 
-Drop it in front of any Model Context Protocol server. Every tool call gets checked for identity, policy, and budget before it reaches your infrastructure — no database, no sticky sessions, nothing new to operate at 3am.
+  <p>
+    <code>docker run --rm -it ghcr.io/asctttt/sentinel-mcp:demo</code>
+  </p>
+</div>
 
-[![CI](https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml/badge.svg)](https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen)
+<p align="center">
+  <a href="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml"><img src="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node version">
+</p>
 
 
 ---
