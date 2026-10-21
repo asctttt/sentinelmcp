@@ -18,13 +18,6 @@
   <a href="https://buy.polar.sh/YOUR_CHECKOUT_LINK"><img src="https://img.shields.io/badge/SentinelMCP_Pro-Get_License_Key-8A2BE2" alt="Get SentinelMCP Pro"></a>
 </p>
 
-<p align="center">
-  <a href="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml"><img src="https://github.com/asctttt/sentinelmcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
-  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen" alt="Node version">
-</p>
-
-
 ---
 
 ## The 2-minute problem

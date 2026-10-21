@@ -72,47 +72,21 @@ const EnvSchema = z.object({
    * engineering-facing kind of knob). See services/budgetGuard.ts for the
    * per-team override mechanism layered on top of these defaults.
    */
-  /** Default trailing-7-day weighted-token budget for any team without an explicit override. Illustrative default — calibrate to your real provider pricing and team sizes. */
   DEFAULT_TEAM_TOKEN_BUDGET_7D: z.coerce.number().int().positive().default(2_000_000),
-  /** How many times a team's recent run-rate must exceed its own pre-spike baseline before that alone (independent of the hard cap) triggers a pause. */
   BUDGET_SPIKE_THRESHOLD_MULTIPLIER: z.coerce.number().positive().default(5),
-  /** Weight applied to output tokens (vs. input tokens) in the budget ledger. Illustrative default reflecting that output tokens commonly cost several times more than input tokens across most LLM providers — calibrate to your actual contract pricing. */
   OUTPUT_TOKEN_COST_WEIGHT: z.coerce.number().positive().default(3),
 
   /**
-   * Phase 5 — resume-token signing. Required, no default, same reasoning as
-   * JWKS_URI/ID_JAG_* in Phase 3: there is no safe default for a secret
-   * that everything downstream trusts. min(32) is a floor on LENGTH, not a
-   * guarantee of entropy — generate this with something like
-   * `openssl rand -base64 32`, not a human-chosen passphrase.
-   *
-   * CRITICAL FOR MULTI-REPLICA DEPLOYMENTS: this value MUST be identical
-   * across every replica. The entire point of the stateless-signed-token
-   * pattern (services/resumeTokenService.ts) is that any replica can verify
-   * a token issued by any other replica, with no shared session state. If
-   * replicas somehow end up with different secrets (e.g. each generating
-   * its own at boot instead of reading a shared configured value), resume
-   * verification starts failing unpredictably depending on which replica
-   * happens to handle the resume call — silently reintroducing the exact
-   * session-affinity requirement this design exists to avoid. This is
-   * exactly why there is no auto-generated fallback here.
+   * Phase 5 — resume-token signing. Required, no default.
    */
   HMAC_SECRET: z.string().min(32),
-  /** How long a human has to act on a paused call before its resumeToken stops verifying. Ops policy knob, not a crypto parameter — env var, not a code constant, matching the other Phase 4 budget policy knobs above. */
-  RESUME_TOKEN_TTL_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
-  HMAC_SECRET: z.string().min(32),
-  /** How long a human has to act on a paused call before its resumeToken stops verifying. Ops policy knob, not a crypto parameter — env var, not a code constant, matching the other Phase 4 budget policy knobs above. */
   RESUME_TOKEN_TTL_MS: z.coerce.number().int().positive().default(15 * 60 * 1000),
 
-  /** Optional Polar.sh Pro license key validated once at process boot. */
+  /** Optional Polar Pro License config */
   SENTINEL_LICENSE_KEY: z.string().min(1).optional(),
-  /** Polar.sh organization UUID associated with SENTINEL_LICENSE_KEY. */
-  POLAR_ORGANIZATION_ID: z.string().uuid().optional(),
+  POLAR_ORGANIZATION_ID: z.string().min(1).optional(),
 });
 
-
-// Fail fast and loud: an invalid or missing config at boot is a deploy-time
-// bug, not something the gateway should limp along with in production.
 const parsed = EnvSchema.safeParse(process.env);
 if (!parsed.success) {
   console.error('Invalid environment configuration:');
@@ -122,27 +96,14 @@ if (!parsed.success) {
 
 export const env = parsed.data;
 
-/**
- * Pre-split so `app.ts` (which needs just the origin, to construct the
- * undici `Pool`) and `middleware/proxyInterceptor.ts` (which needs the path,
- * for each individual request) share one parse of `MCP_UPSTREAM_URL` instead
- * of each re-deriving it.
- */
 const upstreamUrl = new URL(env.MCP_UPSTREAM_URL);
 export const upstream = {
   origin: upstreamUrl.origin,
   path: upstreamUrl.pathname + upstreamUrl.search,
 };
 
-/**
- * `null` means "ALLOWED_ORIGINS was not set" — middleware/originGuard.ts
- * treats that as "loopback only, any port," not as "allow everything."
- * An explicitly-configured list REPLACES that default; it does not extend
- * it, so a production deployment that sets this must include its own
- * loopback entries if local access should still work.
- */
 export const allowedOrigins: string[] | null = env.ALLOWED_ORIGINS
   ? env.ALLOWED_ORIGINS.split(',')
-      .map((origin) => origin.trim())
+      .map((origin: string) => origin.trim())
       .filter(Boolean)
   : null;
